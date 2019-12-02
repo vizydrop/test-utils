@@ -3,6 +3,10 @@ const querystring = require(`querystring`);
 const {v4} = require(`uuid`);
 const superagent = require(`superagent`);
 
+function createQueryString(query = {}) {
+    return Object.keys(query).length ? `?${querystring.stringify(query)}` : ``;
+}
+
 const defaultLoginUrl = `api/v1/login/fakeauth/token`;
 
 const publicPermissionGroups = {
@@ -275,24 +279,22 @@ class RestClient {
     }
 
     createDropToSpaceV2(config, queryParams) {
-        return this.postV2(
-            () => `drops/?${querystring.stringify(queryParams)}`,
-            {
-                container: `space`,
-                containerKey: this.spacePath,
-                schema: {},
-                spec: {},
-                title: `New Drop`,
-                ...config,
-            },
-        );
+        return this.postV2(() => `drops/${createQueryString(queryParams)}`, {
+            container: `space`,
+            containerKey: this.spacePath,
+            schema: {},
+            spec: {},
+            title: `New Drop`,
+            ...config,
+        });
     }
 
     createMultiViewsSource(config, queryParams) {
-        return this.post(
-            () => `sources/?${querystring.stringify(queryParams)}`,
-            {container: `space`, containerKey: this.spacePath, ...config},
-        );
+        return this.post(() => `sources/${createQueryString(queryParams)}`, {
+            container: `space`,
+            containerKey: this.spacePath,
+            ...config,
+        });
     }
 
     moveDropView(sourceId, dropId, to) {
@@ -328,41 +330,20 @@ class RestClient {
         return this.getV2(() => `drops/${id}`);
     }
 
-    getCompiledDrop(id) {
-        return this.get(() => `drops/${id}/compiled`);
+    getCompiledDrop(id, queryParams) {
+        return this.get(() => `drops/${id}/compiled`, queryParams);
     }
 
     getCompiledDropV2(dropId, queryParams) {
-        return this.getV2(
-            () =>
-                `drops/${dropId}/compiled?${querystring.stringify(
-                    queryParams,
-                )}`,
-        );
+        return this.getV2(() => `drops/${dropId}/compiled`, queryParams);
     }
 
-    getCompiledDropView(id) {
-        return this.getV2(() => `drops/${id}/compiled?isUserFilter=true`);
+    getTableTotal(dropId, queryParams) {
+        return this.getV2(() => `drops/table/${dropId}/total`, queryParams);
     }
 
-    getTableTotalView(dropId) {
-        return this.getV2(
-            () => `drops/table/${dropId}/total?isUserFilter=true`,
-        );
-    }
-
-    getTableCountView(dropId) {
-        return this.getV2(
-            () => `drops/table/${dropId}/count?isUserFilter=true`,
-        );
-    }
-
-    getTableTotal(dropId) {
-        return this.getV2(() => `drops/table/${dropId}/total`);
-    }
-
-    getTableCount(dropId) {
-        return this.getV2(() => `drops/table/${dropId}/count`);
+    getTableCount(dropId, queryParams) {
+        return this.getV2(() => `drops/table/${dropId}/count`, queryParams);
     }
 
     createDropUserFilter(dropId, body) {
@@ -413,10 +394,10 @@ class RestClient {
     }
 
     getAccountTemplates(id, appSourceTypes, templatesSource) {
-        const queryString = querystring.stringify({appSourceTypes});
         return this.get(
             () =>
-                `spaces/${this.spacePath}/apps/account/${id}/templates/${templatesSource}?${queryString}`,
+                `spaces/${this.spacePath}/apps/account/${id}/templates/${templatesSource}`,
+            {appSourceTypes},
         );
     }
 
@@ -548,18 +529,24 @@ class RestClient {
         );
     }
 
-    get(relativeUrl) {
+    get(relativeUrl, query) {
         return this.login().then(() =>
             this.agent
-                .get(`${this.apiUrl}${relativeUrl()}`)
+                .get(
+                    `${this.apiUrl}${relativeUrl()}${createQueryString(query)}`,
+                )
                 .then(({body}) => body),
         );
     }
 
-    getV2(relativeUrl) {
+    getV2(relativeUrl, query) {
         return this.login().then(() =>
             this.agent
-                .get(`${this.apiV2Url}${relativeUrl()}`)
+                .get(
+                    `${this.apiV2Url}${relativeUrl()}${createQueryString(
+                        query,
+                    )}`,
+                )
                 .then(({body}) => body),
         );
     }
