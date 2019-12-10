@@ -311,8 +311,8 @@ class RestClient {
         return this.get(() => `sources/${sourceId}/drops`);
     }
 
-    getSpaceDrops() {
-        return this.get(() => `spaces/${this.spacePath}/drops`);
+    getSpaceDrops(query) {
+        return this.get(() => `spaces/${this.spacePath}/drops`, query);
     }
 
     getDashboardDrops(dashboardId) {
