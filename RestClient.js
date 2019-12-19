@@ -289,6 +289,13 @@ class RestClient {
         });
     }
 
+    updateDrop(dropId, config, queryParams) {
+        return this.putV2(
+            () => `drops/${dropId}/${createQueryString(queryParams)}`,
+            config,
+        );
+    }
+
     createMultiViewsSource(config, queryParams) {
         return this.post(() => `sources/${createQueryString(queryParams)}`, {
             container: `space`,
@@ -309,6 +316,14 @@ class RestClient {
 
     getSourceDrops(sourceId) {
         return this.get(() => `sources/${sourceId}/drops`);
+    }
+
+    ignoreSchemaField(sourceId, fieldId) {
+        return this.delete(() => `sources/${sourceId}/field/${fieldId}`);
+    }
+
+    addSchemaField(sourceId, fieldId) {
+        return this.put(() => `sources/${sourceId}/formula`, {id: fieldId});
     }
 
     getSpaceDrops(query) {
@@ -443,6 +458,15 @@ class RestClient {
         return this.login().then(() =>
             this.agent
                 .post(`${this.apiV2Url}${relativeUrl()}`)
+                .send(body)
+                .then(({body: responseBody}) => responseBody),
+        );
+    }
+
+    putV2(relativeUrl, body) {
+        return this.login().then(() =>
+            this.agent
+                .put(`${this.apiV2Url}${relativeUrl()}`)
                 .send(body)
                 .then(({body: responseBody}) => responseBody),
         );
