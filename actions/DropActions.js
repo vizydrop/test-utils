@@ -3,6 +3,7 @@ const path = require(`path`);
 const apiV2 = require(`../api-v2`);
 const api = require(`../api-v1`);
 
+// eslint-disable-next-line no-undef
 const getFilePath = (fileName) => path.resolve(__dirname, `../data`, fileName);
 const isNotifiableResponse = (res) => res.body.result && res.body.notifications;
 const save = (store = {}, done, keys = [`id`, `_id`]) => (res) => {
@@ -223,6 +224,16 @@ class DropActions {
         return apiV2(this.agent, this.serverUrl).del(
             `drops/${drop.id}/sharing/`,
         );
+    }
+
+    getDropUserFilters(dropId) {
+        return api(this.agent, this.serverUrl).get(`dropUserFilter/${dropId}`);
+    }
+
+    setDropUserFilter(dropId, content) {
+        return api(this.agent, this.serverUrl)
+            .put(`dropUserFilter/${dropId}`)
+            .send(content);
     }
 
     get(dropId) {
