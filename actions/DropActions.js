@@ -98,10 +98,11 @@ class DropActions {
         return () => apiV2(this.agent, this.serverUrl).get(`drops`, dropId, ``);
     }
 
-    getDropByLink({spacePath, dropPath}, params = {}) {
+    getDropByLink({spacePath, dropPath}, params = {}, authQuery) {
         return api(this.agent, this.serverUrl)
             .post(`spaces`, spacePath, `entity`, dropPath)
-            .send(params);
+            .query(authQuery)
+            .send(params || {});
     }
 
     getSourceFilterByDropLink({spacePath, dropPath}) {
