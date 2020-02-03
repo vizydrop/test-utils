@@ -191,6 +191,12 @@ class SourceActions {
             .send({updateInterval})
             .query(query);
     }
+
+    getSource(sourceId, query) {
+        return api(this.agent, this.serverUrl)
+            .get(`sources/${sourceId}`)
+            .query(query);
+    }
 }
 
 module.exports = {
