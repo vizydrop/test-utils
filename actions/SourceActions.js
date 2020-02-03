@@ -184,6 +184,13 @@ class SourceActions {
                 .post(`sources/${sourceId}/drops/${dropId}/order`)
                 .send({to});
     }
+
+    changeUpdateInterval(sourceId, updateInterval, query) {
+        return api(this.agent, this.serverUrl)
+            .put(`sources/${sourceId}/updateInterval`)
+            .send({updateInterval})
+            .query(query);
+    }
 }
 
 module.exports = {
