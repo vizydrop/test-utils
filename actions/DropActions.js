@@ -237,6 +237,12 @@ class DropActions {
             .send(content);
     }
 
+    updateNotify(dropId, queryParams) {
+        return apiV2(this.agent, this.serverUrl)
+            .get(`drops`, dropId, `update`, `notify`)
+            .query(queryParams);
+    }
+
     get(dropId) {
         return this.getDrop(dropId);
     }
