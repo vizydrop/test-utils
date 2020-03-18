@@ -179,11 +179,11 @@ class RestClient {
     }
 
     getDropTemplate(dropId) {
-        return this.getV2(() => `drops/${dropId}/clone/template`);
+        return this.getV2(() => `drops/${dropId}/template`);
     }
 
     getDropCloneTemplate(dropId) {
-        return this.getV2(() => `drops/${dropId}/template`);
+        return this.getV2(() => `drops/${dropId}/clone/template`);
     }
 
     updateSource(id) {
