@@ -613,6 +613,18 @@ class RestClient {
         });
     }
 
+    getDropSourceData(dropId) {
+        return this.getV2(() => `drops/${dropId}/sourceData`);
+    }
+
+    getDropSourceDataCount(dropId) {
+        return this.getV2(() => `drops/${dropId}/sourceData/count`);
+    }
+
+    getDropSourceDataCsv(dropId) {
+        return this.getV2(() => `drops/${dropId}/sourceData/csv`);
+    }
+
     static createDefaultClient(
         host,
         {token, companies, loginUrl = defaultLoginUrl, app} = {
