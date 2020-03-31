@@ -627,6 +627,18 @@ class RestClient {
         );
     }
 
+    getDropDataJson(dropId) {
+        return this.login().then(() =>
+            this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData/json`),
+        );
+    }
+
+    getDropDataCsv(dropId) {
+        return this.login().then(() =>
+            this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData/csv`),
+        );
+    }
+
     static createDefaultClient(
         host,
         {token, companies, loginUrl = defaultLoginUrl, app} = {
