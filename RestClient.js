@@ -622,7 +622,9 @@ class RestClient {
     }
 
     getDropSourceDataCsv(dropId) {
-        return this.getV2(() => `drops/${dropId}/sourceData/csv`);
+        return this.login().then(() =>
+            this.agent.get(`${this.apiV2Url}drops/${dropId}/sourceData/csv`),
+        );
     }
 
     static createDefaultClient(
