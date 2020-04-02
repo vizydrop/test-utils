@@ -194,8 +194,11 @@ class RestClient {
         return this.put(() => `sources/${sourceId}/owner`, {appAccountId});
     }
 
-    updateSourceWithNotify(id) {
-        return this.get(() => `sources/${id}/update/notify`);
+    updateSourceWithNotify(id, {dropId}) {
+        return this.post(
+            () => `sources/${id}/update/notify`,
+            dropId ? {dropId} : {},
+        );
     }
 
     getSource(id) {

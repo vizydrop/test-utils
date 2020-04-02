@@ -108,13 +108,11 @@ class SourceActions {
                 .send(schema || {});
     }
 
-    updateWithNotify(sourceId) {
+    updateWithNotify(sourceId, {dropId}) {
         return () =>
-            api(this.agent, this.serverUrl).get(
-                `sources`,
-                sourceId,
-                `update/notify`,
-            );
+            api(this.agent, this.serverUrl)
+                .post(`sources`, sourceId, `update/notify`)
+                .send(dropId ? {dropId} : {});
     }
 
     getSchema(sourceId) {
