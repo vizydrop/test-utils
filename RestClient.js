@@ -174,8 +174,13 @@ class RestClient {
         return this.get(() => `sources/${sourceId}/fields/${fieldName}/data`);
     }
 
-    getSourceCloneTemplate(sourceId) {
-        return this.get(() => `sources/${sourceId}/clone/template`);
+    getSourceCloneTemplate(sourceId, queryParams) {
+        return this.get(
+            () =>
+                `sources/${sourceId}/clone/template${createQueryString(
+                    queryParams,
+                )}`,
+        );
     }
 
     getDropTemplate(dropId) {
