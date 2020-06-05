@@ -195,6 +195,12 @@ class SourceActions {
             .get(`sources/${sourceId}`)
             .query(query);
     }
+
+    getSourceCloneTemplate(sourceId, query) {
+        return api(this.agent, this.serverUrl)
+            .get(`sources/${sourceId}/clone/template`)
+            .query(query);
+    }
 }
 
 module.exports = {
