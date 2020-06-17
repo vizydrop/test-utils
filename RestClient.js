@@ -635,9 +635,20 @@ class RestClient {
         );
     }
 
-    getDropData(dropId) {
+    getDropData(
+        dropId,
+        {limit = 100, offset = 0, applyUserFilters = true} = {},
+    ) {
         return this.login().then(() =>
-            this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData`),
+            this.agent.get(
+                `${
+                    this.apiV2Url
+                }drops/${dropId}/reportData?${querystring.stringify({
+                    limit,
+                    offset,
+                    applyUserFilters,
+                })}`,
+            ),
         );
     }
 
