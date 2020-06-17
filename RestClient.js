@@ -635,6 +635,26 @@ class RestClient {
         );
     }
 
+    getDropData(dropId) {
+        return this.login().then(() =>
+            this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData`),
+        );
+    }
+
+    getDropDataColumns(dropId) {
+        return this.login().then(() =>
+            this.agent.get(
+                `${this.apiV2Url}drops/${dropId}/reportData/columns`,
+            ),
+        );
+    }
+
+    getDropDataCount(dropId) {
+        return this.login().then(() =>
+            this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData/count`),
+        );
+    }
+
     getDropDataJson(dropId) {
         return this.login().then(() =>
             this.agent.get(`${this.apiV2Url}drops/${dropId}/reportData/json`),
