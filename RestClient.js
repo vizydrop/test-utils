@@ -109,11 +109,11 @@ class RestClient {
                 this.post(() => `synchronization-sources/${id}/data/fetch`),
             getFetchDataState: (id) =>
                 this.get(() => `synchronization-sources/${id}/data/state`),
-            getData: (id, type, {limit, offset}) =>
+            getData: (id, type, query) =>
                 this.get(
                     () =>
                         `synchronization-sources/${id}/types/${type}/data${createQueryString(
-                            {limit, offset},
+                            query,
                         )}`,
                 ),
             getDataCount: (id, type) =>
