@@ -117,7 +117,7 @@ class RestClient {
                         )}`,
                 ),
             getDataCount: (id, type) =>
-                this.get(`synchronization-sources/${id}/types/${type}`),
+                this.get(() => `synchronization-sources/${id}/types/${type}`),
             getConfig: (payload) =>
                 this.post(() => `synchronization-sources/meta/config`, payload),
             getDatalist: (payload) =>
