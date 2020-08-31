@@ -96,6 +96,36 @@ class RestClient {
                         `integration-solutions/${integrationSolutionId}/usersApps`,
                 ),
         };
+
+        this.synchronizationSources = {
+            create: (payload) =>
+                this.post(() => `synchronization-sources`, payload),
+            modify: (id, payload) =>
+                this.put(() => `synchronization-sources/${id}`, payload),
+            getById: (id) => this.get(() => `synchronization-sources/${id}`),
+            getSchema: (id) =>
+                this.get(() => `synchronization-sources/${id}/schema`),
+            fetchData: (id) =>
+                this.post(() => `synchronization-sources/${id}/data/fetch`),
+            getFetchDataState: (id) =>
+                this.get(() => `synchronization-sources/${id}/data/state`),
+            getData: (id, type, {limit, offset}) =>
+                this.get(
+                    () =>
+                        `synchronization-sources/${id}/types/${type}/data${createQueryString(
+                            {limit, offset},
+                        )}`,
+                ),
+            getDataCount: (id, type) =>
+                this.get(`synchronization-sources/${id}/types/${type}`),
+            getConfig: (payload) =>
+                this.post(() => `synchronization-sources/meta/config`, payload),
+            getDatalist: (payload) =>
+                this.post(
+                    () => `synchronization-sources/meta/datalist`,
+                    payload,
+                ),
+        };
     }
 
     login() {
