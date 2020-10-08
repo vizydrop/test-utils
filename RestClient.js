@@ -107,8 +107,11 @@ class RestClient {
                 this.get(() => `synchronization-sources/${id}/settings`),
             getSchema: (id) =>
                 this.get(() => `synchronization-sources/${id}/schema`),
-            fetchData: (id) =>
-                this.post(() => `synchronization-sources/${id}/data/fetch`),
+            fetchData: (id, payload) =>
+                this.post(
+                    () => `synchronization-sources/${id}/data/fetch`,
+                    payload,
+                ),
             getFetchDataState: (id) =>
                 this.get(() => `synchronization-sources/${id}/data/state`),
             getData: (id, type, query) =>
