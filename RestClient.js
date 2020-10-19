@@ -112,6 +112,8 @@ class RestClient {
                     () => `synchronization-sources/${id}/data/fetch`,
                     payload,
                 ),
+            cancelFetchData: (id) =>
+                this.delete(() => `synchronization-sources/${id}/data/fetch`),
             getFetchDataState: (id) =>
                 this.get(() => `synchronization-sources/${id}/data/state`),
             getData: (id, type, query) =>
