@@ -123,6 +123,10 @@ class RestClient {
                             query,
                         )}`,
                 ),
+            clearData: (id, type) =>
+                this.delete(
+                    () => `synchronization-sources/${id}/types/${type}/data`,
+                ),
             getDataCount: (id, type) =>
                 this.get(
                     () =>
