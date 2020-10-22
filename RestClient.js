@@ -103,8 +103,15 @@ class RestClient {
             modify: (id, payload) =>
                 this.put(() => `synchronization-sources/${id}`, payload),
             getById: (id) => this.get(() => `synchronization-sources/${id}`),
-            getSettingsById: (id) =>
-                this.get(() => `synchronization-sources/${id}/settings`),
+            getSettingsById: (id, {accountId} = {}) =>
+                this.get(
+                    () => `synchronization-sources/${id}/settings`,
+                    accountId
+                        ? {
+                              accountId,
+                          }
+                        : {},
+                ),
             getSchema: (id) =>
                 this.get(() => `synchronization-sources/${id}/schema`),
             fetchData: (id, payload) =>
@@ -189,6 +196,10 @@ class RestClient {
             () => `spaces/${this.spacePath}/apps/${appId}/connect/`,
             auth,
         );
+    }
+
+    deleteAccount(accountId) {
+        return this.delete(() => `accounts/${accountId}`);
     }
 
     createSource({app, id}, appSourceType, filter) {

@@ -5,16 +5,15 @@ module.exports = {
         es6: true,
         node: true,
     },
-    extends: "eslint:recommended",
+    extends: ["eslint:recommended", "plugin:node/recommended", "prettier"],
     globals: {
         Atomics: "readonly",
         SharedArrayBuffer: "readonly",
     },
     parserOptions: {
-        ecmaVersion: 2018,
+        ecmaVersion: 2020,
     },
     rules: {
-        indent: ["error", 4],
         "linebreak-style": ["error", "unix"],
         quotes: ["error", "backtick"],
         semi: ["error", "always"],
