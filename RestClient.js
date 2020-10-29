@@ -146,6 +146,12 @@ class RestClient {
                     () => `synchronization-sources/meta/datalist`,
                     payload,
                 ),
+            processEvent: (syncSourceId, payload) =>
+                this.post(
+                    () =>
+                        `synchronization-sources/${syncSourceId}/process-event`,
+                    payload,
+                ),
         };
     }
 
