@@ -102,6 +102,7 @@ class RestClient {
                 this.post(() => `synchronization-sources`, payload),
             modify: (id, payload) =>
                 this.put(() => `synchronization-sources/${id}`, payload),
+            remove: (id) => this.delete(() => `synchronization-sources/${id}`),
             getById: (id) => this.get(() => `synchronization-sources/${id}`),
             getSettingsById: (id, {accountId} = {}) =>
                 this.get(
